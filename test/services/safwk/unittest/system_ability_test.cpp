@@ -237,6 +237,20 @@ HWTEST_F(SystemAbilityTest, Publish002, TestSize.Level2)
 }
 
 /**
+ * @tc.name: OnStartFail001
+ * @tc.desc: Verify OnStartFail function
+ * @tc.type: FUNC
+ */
+HWTEST_F(SystemAbilityTest, OnStartFail001, TestSize.Level2)
+{
+    DTEST_LOG << "OnStartFail001 start" << std::endl;
+    std::shared_ptr<SystemAbility> sysAby = std::make_shared<MockSaRealize>(SAID, false);
+    bool ret = sysAby->OnStartFail(-1);
+    EXPECT_FALSE(ret);
+    DTEST_LOG << "OnStartFail001 end" << std::endl;
+}
+
+/**
  * @tc.name: SetDependTimeout001
  * @tc.desc: Verify SetDependTimeout
  * @tc.type: FUNC

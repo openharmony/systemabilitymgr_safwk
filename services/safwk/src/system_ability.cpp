@@ -99,6 +99,20 @@ bool SystemAbility::Publish(sptr<IRemoteObject> systemAbility)
     return false;
 }
 
+bool SystemAbility::OnStartFail(int32_t errCode)
+{
+    int64_t begin = GetTickCount();
+    sptr<ISystemAbilityManager> samgrProxy = SystemAbilityManagerClient::GetInstance().GetSystemAbilityManager();
+    if (samgrProxy == nullptr) {
+        HILOGE(TAG, "failed to get samgrProxy");
+        return false;
+    }
+    int32_t result = samgrProxy->OnStartSystemAbilityFail(saId_, errCode);
+    HILOGI(TAG, "SA:%{public}d result:%{public}d,spend:%{public}" PRId64 "ms",
+        saId_, result, (GetTickCount() - begin));
+    return result == ERR_OK;
+}
+
 bool SystemAbility::CancelIdle()
 {
     {
