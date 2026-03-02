@@ -185,6 +185,14 @@ protected:
     bool Publish(sptr<IRemoteObject> systemAbility);
 
     /**
+     * OnStartFail, Notifying the samgr of an onstart failure.
+     *
+     * @param errCode, OnStart exception reason.
+     * @return True indicates Notify succeeded.
+     */
+    bool OnStartFail(int32_t errCode);
+
+    /**
      * CancelIdle, Cancel Uninstall, Calling the function from idle to active.
      *
      * @return True indicates Cancel succeeded.
