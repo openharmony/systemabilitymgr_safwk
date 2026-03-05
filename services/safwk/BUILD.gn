@@ -97,7 +97,6 @@ ohos_shared_library("sa_start") {
     ":config_safwk",
     "//foundation/systemabilitymgr/safwk/test/resource:coverage_flags",
   ]
-  configs += [ "//build/config/gcc:symbol_visibility_hidden" ]
 
   ldflags = [
     "-rdynamic",
