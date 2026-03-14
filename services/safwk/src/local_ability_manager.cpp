@@ -1113,8 +1113,8 @@ bool LocalAbilityManager::GetSaLastRequestTime(int32_t saId, uint64_t& lastReque
         HILOGE(TAG, "SA:%{public}d stub is nullptr", saId);
         return false;
     }
-    HILOGI(TAG, "SA:%{public}d last request time %{public}" PRIu64, saId, lastRequestTime);
     lastRequestTime = saStub->GetLastRequestTime();
+    HILOGI(TAG, "SA:%{public}d last request time %{public}" PRIu64, saId, lastRequestTime);
     return true;
 }
 
