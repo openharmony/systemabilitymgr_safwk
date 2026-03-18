@@ -1105,13 +1105,16 @@ bool LocalAbilityManager::GetSaLastRequestTime(int32_t saId, uint64_t& lastReque
     }
     sptr<IRemoteObject> object = ability->GetAbilityRemoteObject();
     if (object == nullptr) {
+        HILOGD(TAG, "SA:%{public}d is not register", saId);
         return false;
     }
     sptr<IPCObjectStub> saStub = reinterpret_cast<IPCObjectStub*>(object.GetRefPtr());
     if (saStub == nullptr) {
+        HILOGE(TAG, "SA:%{public}d stub is nullptr", saId);
         return false;
     }
     lastRequestTime = saStub->GetLastRequestTime();
+    HILOGI(TAG, "SA:%{public}d last request time %{public}" PRIu64, saId, lastRequestTime);
     return true;
 }
 
