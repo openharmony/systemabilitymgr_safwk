@@ -368,6 +368,11 @@
             "name" : "mkdir insight_intent",
             "said" : "180",
             "description" : "Create insight_intent directory for insight_intent to save data file at /data/service/el1/public/database/insight_intent"
+        },
+        {
+            "name" : "mkdir modular_object_extension",
+            "said" : "180",
+            "description" : "Create modular_object_extension directory for modular_object_extension to save data file at /data/service/el1/public/database/modular_object_extension"
         }
     ],
     "bootevents" : [
