@@ -16,6 +16,7 @@
 
 #include "local_ability_manager.h"
 #include "malloc.h"
+#include "parse_safwk_int.h"
 #include "parse_util.h"
 #include "safwk_log.h"
 #include "securec.h"
@@ -78,10 +79,19 @@ static int32_t ParseArgv(char *argv[], nlohmann::json& eventMap, int eventIndex)
         HILOGE(TAG, "eventVec[0] StrToInt said error");
         return DEFAULT_SAID;
     }
-    eventMap[EVENT_TYPE] = atoi(eventVec[ID_INDEX].c_str());
+    int eventType = 0;
+    if (!ParseSafwkInt(eventVec[ID_INDEX], eventType)) {
+        HILOGE(TAG, "Invalid event type: %{public}s", eventVec[ID_INDEX].c_str());
+        eventType = 0;
+    }
+    eventMap[EVENT_TYPE] = eventType;
     eventMap[EVENT_NAME] = eventVec[NAME_INDEX];
     eventMap[EVENT_VALUE] = eventVec[VALUE_INDEX];
-    int extraDataId = atoi(eventVec[EXTRA_DATA_ID_INDEX].c_str());
+    int extraDataId = 0;
+    if (!ParseSafwkInt(eventVec[EXTRA_DATA_ID_INDEX], extraDataId)) {
+        HILOGE(TAG, "Invalid extraDataId: %{public}s", eventVec[EXTRA_DATA_ID_INDEX].c_str());
+        extraDataId = 0;
+    }
     eventMap[EVENT_EXTRA_DATA_ID] = extraDataId;
     HILOGD(TAG, "ParseArgv extraDataId :%{public}d!", extraDataId);
     return saId;
@@ -131,8 +141,12 @@ static void InitMallopt(int argc, char *argv[], int& ondemandLoad, int& eventInd
             HILOGE(TAG, "mallopt config string : %{public}s is invalid", malloptStrList[i].c_str());
             continue;
         }
-        int key = atoi(malloptItem[0].c_str());
-        int value = atoi(malloptItem[1].c_str());
+        int key = 0;
+        int value = 0;
+        if (!ParseSafwkInt(malloptItem[0], key) || !ParseSafwkInt(malloptItem[1], value)) {
+            HILOGE(TAG, "mallopt config string : %{public}s is invalid", malloptStrList[i].c_str());
+            continue;
+        }
 
         int err = mallopt(key, value);
         if (err != 1) {
